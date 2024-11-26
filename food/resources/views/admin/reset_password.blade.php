@@ -20,7 +20,7 @@
     @endif
 
 
-    <form action="{{route('admin.login_submit')}}" method="post">
+    <form action="{{route('admin.reset_password_submit')}}" method="post">
         @csrf
         <input type="hidden" name="token" value="{{ $token }}">
         <input type="hidden" name="email" value="{{ $email }}">

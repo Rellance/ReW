@@ -16,7 +16,7 @@ class AdminController extends Controller
     }
     
     public function AdminDashboard(){
-        return view('admin.dashboard');
+        return view('admin.index');
     }
 
     public function AdminLoginSubmit(Request $request){
@@ -76,6 +76,19 @@ class AdminController extends Controller
             return redirect()->route('admin.login')->with('error', 'Invalid Token or Email');
         }
         return view('admin.reset_password', compact('token', 'email'));
+    }
+
+    public function AdminResetPasswordSubmit(Request $request){
+        $request->validate([
+            'password'=>'required',    
+            'password_confirmation'=>'required|same:password',
+        ]);
+        $admin_data = Admin::where('email',$request->email)->where('token',$request->token)->first();
+        $admin_data->password = Hash::make($request->password);
+        $admin_data->token ="";
+        $admin_data->update();
+
+        return redirect()->route('admin.login')->with('success','Password Reset Successefully');
     }
     
 }

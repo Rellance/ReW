@@ -36,4 +36,7 @@ Route::post('/admin/password_submit', [AdminController::class, 'AdminPasswordSub
 Route::get('/admin/reset-password/{token}/{email}', [AdminController::class, 'AdminResetPassword'])
     ->name('admin.reset_password');
 
+Route::post('/admin/reset_password_submit', [AdminController::class, 'AdminResetPasswordSubmit'])->name('admin.reset_password_submit');
+
+
 
