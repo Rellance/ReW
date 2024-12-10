@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class Client extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -17,8 +16,8 @@ class Client extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guard = 'client';
-    protected $guarded = [];
+     protected $guard = 'client';
+     protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
