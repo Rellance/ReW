@@ -133,11 +133,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
-                                <div class="mt-5 text-center">
-                                    <p class="text-muted mb-0">Don't have an account ? <a href="auth-register.html"
-                                            class="text-primary fw-semibold"> Signup now </a> </p>
-                                </div>
                             </div>
                             <div class="mt-4 mt-md-5 text-center">
                                 <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> EasyLearing   . Crafted with <i class="mdi mdi-heart text-danger"></i> by EasyLearing</p>
