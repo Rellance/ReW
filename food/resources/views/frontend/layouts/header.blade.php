@@ -32,7 +32,7 @@
                         <a class="dropdown-item" href="login.html">Login</a>
                         <a class="dropdown-item" href="register.html">Register</a>
                         <a class="dropdown-item" href="404.html">404</a>
-                        <a class="dropdown-item" href="extra.html">Extra :)</a>
+                        <a class="dropdown-item" href="extra.html">Extra :</a>
                      </div>
                   </li>
                   <li class="nav-item dropdown">
