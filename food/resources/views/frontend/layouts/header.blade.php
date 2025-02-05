@@ -23,6 +23,7 @@
                </li>
 
                @auth
+               
                    @php
                        $id = Auth::user()->id;
                        $profileData = App\Models\User::find($id);
@@ -41,7 +42,9 @@
                                Logout</a>
                        </div>
                    </li>
+
                @else
+
                <li class="nav-item ms-2">
                   <a class="nav-link btn btn-outline-light rounded-pill px-4 py-2" href="{{ route('login') }}">
                       <i class="bi bi-box-arrow-in-right me-2"></i>Login
@@ -51,12 +54,7 @@
                   <a class="nav-link btn btn-warning rounded-pill px-4 py-2 text-white" href="{{ route('register') }}">
                       <i class="bi bi-person-plus me-2"></i>Register
                   </a>
-              </li>
-              
-              
-              
-              
-              
+              </li> 
               
              @endauth
 
