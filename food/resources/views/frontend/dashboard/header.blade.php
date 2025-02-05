@@ -26,7 +26,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light osahan-nav shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><img alt="logo"
+            <a class="navbar-brand" href="{{route('index')}}"><img alt="logo"
                     src="{{ asset('frontend/img/logo.png') }}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,9 +72,9 @@
                                 class="nav-osahan-pic rounded-pill"> My Account
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
-                            <a class="dropdown-item" href="orders.html#orders"><i class="icofont-food-cart"></i>
+                            <a class="dropdown-item" href="{{route('dashboard')}}"><i class="icofont-food-cart"></i>
                                 Dashboard</a>
-                            <a class="dropdown-item" href="orders.html#offers"><i class="icofont-sale-discount"></i>
+                            <a class="dropdown-item" href="{{route('user.logout')}}"><i class="icofont-sale-discount"></i>
                                 Logout</a>
                         </div>
                     </li>

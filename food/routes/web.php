@@ -11,7 +11,6 @@ use App\Http\Controllers\UserController;
 }); */
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
-
 Route::get('/dashboard', function () {
     return view('frontend.dashboard.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -19,7 +18,11 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/profile/store', [UserController::class, 'ProfileStore'])->name('profile.store');
+    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+    Route::get('user/change/password', [UserController::class, 'UserChangePassword'])->name('change.password');
+    Route::post('user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
 
+    
 });
 
 require __DIR__.'/auth.php';

@@ -15,11 +15,14 @@ class UserController extends Controller
     public function ProfileStore(Request $request){
         $id = Auth::user()->id;
         $data = User::find($id);
+
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
         $data->addres = $request->address; 
+
         $oldPhotoPath = $data->photo;
+
         if ($request->hasFile('photo')) {
            $file = $request->file('photo');
            $filename = time().'.'.$file->getClientOriginalExtension();
@@ -42,5 +45,38 @@ class UserController extends Controller
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
+     }
+
+     public function UserLogout(){
+        Auth::guard('web')->logout();
+        return redirect()->route('login')->with('success', 'Logout Successfully');
+    }
+
+    public function UserChangePassword(){
+        return view('frontend.dashboard.change_password');
+     }
+
+     public function UserPasswordUpdate(Request $request){
+        $user = Auth::guard('web')->user();
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+        if (!Hash::check($request->old_password,$user->password)) {
+            $notification = array(
+                'message' => 'Old Password Does not Match!',
+                'alert-type' => 'error'
+            );
+            return back()->with($notification);
+        }
+        /// Update the new password 
+        User::whereId($user->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+                $notification = array(
+                'message' => 'Password Change Successfully',
+                'alert-type' => 'success'
+            );
+            return back()->with($notification);
      }
 }
