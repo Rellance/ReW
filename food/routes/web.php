@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 Route::get('/dashboard', function () {
@@ -17,11 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
     Route::get('user/change/password', [UserController::class, 'UserChangePassword'])->name('change.password');
     Route::post('user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
-
-    
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 /// ALL ROUTE FOR ADMIN 
 
@@ -60,5 +59,14 @@ Route::post('/client/register/submit', [ClientController::class, 'ClientRegister
 Route::post('/client/login_submit', [ClientController::class, 'ClientLoginSubmit'])->name('client.login_submit');
 Route::get('/client/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
 
+/// All Admin Category
 
-/// "ЭРИК ГАНДОН"
+Route::middleware('admin')->group(function () {
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/all/category', 'AllCategory')->name('all.category');
+        Route::get('/add/category', 'AddCategory')->name('add.category');
+        Route::post('/store/category',  'StoreCategory')->name('category.store');
+        Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
+        Route::post('/update/category',  'UpdateCategory')->name('category.update');
+    });
+}); // End Admin Middleware

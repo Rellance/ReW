@@ -43,19 +43,17 @@
                        </div>
                    </li>
 
-               @else
-
-               <li class="nav-item ms-2">
-                  <a class="nav-link btn btn-outline-light rounded-pill px-4 py-2" href="{{ route('login') }}">
-                      <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                  </a>
-              </li>
-              <li class="nav-item ms-2">
-                  <a class="nav-link btn btn-warning rounded-pill px-4 py-2 text-white" href="{{ route('register') }}">
-                      <i class="bi bi-person-plus me-2"></i>Register
-                  </a>
-              </li> 
-              
+                   @else
+             <li class="nav-item dropdown">
+               <a class="nav-link" href="{{ route('login') }}" role="button"   aria-haspopup="true" aria-expanded="false">
+               Login
+               </a> 
+            </li>
+            <li class="nav-item dropdown">
+               <a class="nav-link" href="{{ route('register') }}" role="button" aria-haspopup="true" aria-expanded="false">
+               Register
+               </a> 
+            </li>
              @endauth
 
                <li class="nav-item dropdown dropdown-cart">
