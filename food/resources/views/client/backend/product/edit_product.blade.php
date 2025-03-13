@@ -9,12 +9,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Add Product</h4>
+                    <h4 class="mb-sm-0 font-size-18">Edit Product</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Add Product </li>
+                            <li class="breadcrumb-item active">Edit Product </li>
                         </ol>
                     </div>
 
@@ -28,8 +28,9 @@
                 <div class="card">
                     <div class="card-body p-4">
 
-                        <form id="myForm" action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+                        <form id="myForm" action="{{ route('product.update') }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="id" value="{{ $product->id }}">
 
                             <div class="row">
                                 <div class="col-xl-4 col-md-6">
@@ -38,8 +39,7 @@
                                             <select name="category_id" class="form-select">
                                                    <option>Select</option>
                                                    @foreach ($category as $cat)
-                                                   <option value="{{$cat->id}}" >{{$cat->category_name}}</option> 
-                                                   @endforeach
+                                                   <option value="{{ $cat->id }}" {{ $cat->id == $product->category_id ? 'selected' : '' }} >{{ $cat->category_name }}</option>                                                   @endforeach
                                             </select>
                                         </div>
                                 </div>
@@ -49,8 +49,7 @@
                                             <select name="menu_id"class="form-select">
                                                    <option>Select</option>
                                                    @foreach ($menu as $men)
-                                                   <option value="{{$men->id}}" >{{$men->menu_name}}</option> 
-                                                   @endforeach
+                                                   <option value="{{ $men->id }}" {{ $men->id == $product->menu_id ? 'selected' : '' }}>{{ $men->menu_name }}</option>                                                   @endforeach
                                             </select>
                                         </div>
                                 </div>
@@ -60,39 +59,38 @@
                                             <select name="city_id" class="form-select">
                                                    <option selected="" disabled="" >Select</option>
                                                    @foreach ($city as $cit)
-                                                   <option value="{{$cit->id}}" >{{$cit->city_name}}</option> 
-                                                   @endforeach
+                                                   <option value="{{ $cit->id }}" {{ $cit->id == $product->city_id ? 'selected' : '' }}>{{ $cit->city_name }}</option>                                                   @endforeach
                                             </select>
                                         </div>
                                 </div>
                                 <div class="col-xl-4 col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="example-text-input" class="form-label">Product Name</label>
-                                            <input class="form-control" type="text" name="name" id="example-text-input">
+                                            <input class="form-control" type="text" name="name" id="example-text-input" value="{{ $product->name }}" >
                                         </div>
                                 </div>
                                 <div class="col-xl-4 col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="example-text-input" class="form-label">Price</label>
-                                            <input class="form-control" type="text" name="price" id="example-text-input">
+                                            <input class="form-control" type="text" name="price" id="example-text-input" value="{{ $product->price }}">
                                         </div>
                                 </div>
                                 <div class="col-xl-4 col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="example-text-input" class="form-label">Discount Price</label>
-                                            <input class="form-control" type="text" name="discount_price" id="example-text-input">
+                                            <input class="form-control" type="text" name="discount_price" id="example-text-input" value="{{ $product->discount_price }}">
                                         </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="example-text-input" class="form-label">Size</label>
-                                            <input class="form-control" type="text" name="size" id="example-text-input">
+                                            <input class="form-control" type="text" name="size" id="example-text-input" value="{{ $product->size }}">
                                         </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="example-text-input" class="form-label">Product QTY</label>
-                                            <input class="form-control" type="text" name="qty" id="example-text-input">
+                                            <input class="form-control" type="text" name="qty" id="example-text-input" value="{{ $product->qty }}">
                                         </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6">
@@ -103,17 +101,17 @@
                                 </div>
                                 <div class="col-xl-6 col-md-6">
                                         <div class="form-group mb-3">
-                                        <img id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="" class="rounded-circle p-1 bg-primary" width="110">
+                                        <img id="showImage" src="{{ asset($product->image) }}" alt="" class="rounded-circle p-1 bg-primary" width="110">
                                         </div>
                                 </div>
                                 <div class="form-check mt-2">
-                                   <input name="best_seller" class="form-check-input" type="checkbox" id="formCheck2" value="1">
+                                   <input {{ $product->best_seller == 1 ? 'checked': '' }} name="best_seller" class="form-check-input" type="checkbox" id="formCheck2" value="1">
                                     <label class="form-check-label" for="formCheck2">
                                         Best Seller
                                     </label>
                                 </div>
                                 <div class="form-check mt-2">
-                                   <input name="most_populer" class="form-check-input" type="checkbox" id="formCheck2" value="1">
+                                   <input {{ $product->most_populer == 1 ? 'checked': '' }} name="most_populer" class="form-check-input" type="checkbox" id="formCheck2" value="1">
                                     <label name="s_seller" class="form-check-label" for="formCheck2">
                                         Most Populer
                                     </label>
@@ -149,9 +147,6 @@
                 name: {
                     required: true,
                 },
-                image: {
-                    required: true,
-                },
                 city_id: {
                     required: true,
                 },
@@ -160,9 +155,6 @@
             messages: {
                 name: {
                     required: 'Please Enter Name',
-                },
-                image: {
-                    required: 'Please Select Image',
                 },
                 city_id: {
                     required: 'Please Select City',
