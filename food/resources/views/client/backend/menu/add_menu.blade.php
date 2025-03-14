@@ -32,16 +32,6 @@
                             @csrf
 
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div>
-                                        <div class="form-group mb-3">
-                                            <label for="example-text-input" class="form-label">Menu Name</label>
-                                            <input class="form-control" type="text" name="menu_name" id="example-text-input">
-                                        </div>
-
-                                    </div>
-                                </div>
-
                                 <div class="col-lg-6">
                                     <div class="mt-3 mt-lg-0">
 
