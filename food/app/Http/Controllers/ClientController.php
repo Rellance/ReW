@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash; 
 use App\Models\Client;
+use App\Models\City;
 
 class ClientController extends Controller
 {
@@ -74,9 +75,10 @@ class ClientController extends Controller
     }
 
     public function ClientProfile(){
+        $city = City::latest()->get();
         $id = Auth::guard('client')->id();
         $profileData = Client::find($id);
-        return view('client.client_profile', compact('profileData'));
+        return view('client.client_profile', compact('profileData','city'));
     }
 
     public function ClientProfileStore(Request $request){
@@ -86,6 +88,8 @@ class ClientController extends Controller
         $data->email = $request->email;
         $data->phone = $request->phone;
         $data->addres = $request->address; 
+        $data->city_id = $request->city_id; 
+        $data->shop_info = $request->shop_info; 
         $oldPhotoPath = $data->photo;
         if ($request->hasFile('photo')) {
            $file = $request->file('photo');
@@ -96,6 +100,16 @@ class ClientController extends Controller
              $this->deleteOldImage($oldPhotoPath);
            }
         }
+
+        if ($request->hasFile('cover_photo')) {
+            $file1 = $request->file('cover_photo');
+            $filename1 = time().'.'.$file1->getClientOriginalExtension();
+            $file1->move(public_path('upload/client_images'),$filename1);
+            $data->cover_photo = $filename1;
+            if ($oldPhotoPath && $oldPhotoPath !== $filename1) {
+              $this->deleteOldImage($oldPhotoPath);
+            }
+         }
         $data->save();
         $notification = array(
             'message' => 'Profile Updated Successfully',
