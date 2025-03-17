@@ -72,13 +72,15 @@
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">City</label>
                                         <select name="city_id" class="form-select">
-                                            <option>Select</option>
+                                            <option value="">Select City</option>
                                             @foreach ($city as $cit)
-
-                                            <option value="{{ $cit->id }}" {{ $cit->id == $profileData->city_id ? 'selected' : '' }}>{{ $cit->city_name }}</option>
+                                                <option value="{{ $cit->id }}" {{ $cit->id == $profileData->city_id ? 'selected' : '' }}>
+                                                    {{ $cit->city_name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
+                                    
 
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">Restaurant Info</label>
@@ -97,7 +99,7 @@
                                 <div class="mt-3 mt-lg-0">
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">Address</label>
-                                        <input class="form-control" name="address" type="text" value="{{ $profileData->address }}" id="example-text-input">
+                                        <input class="form-control" name="address" type="text" value="{{ $profileData->addres}}" id="example-text-input">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">Profile Image</label>
