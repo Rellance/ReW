@@ -64,9 +64,11 @@ class ClientController extends Controller
     }
 // End Method 
 
-    public function ClientDashboard(){
-        return view('client.index');
-    }
+public function ClientDashboard(){
+    $id = Auth::guard('client')->id();
+    $profileData = Client::find($id);
+    return view('client.index', compact('profileData'));
+}
     // End Method 
 
     public function ClientLogout(){

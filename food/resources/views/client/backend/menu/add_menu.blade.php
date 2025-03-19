@@ -36,6 +36,11 @@
                                     <div class="mt-3 mt-lg-0">
 
                                         <div class="form-group mb-3">
+                                            <label for="example-text-input" class="form-label">Menu Name</label>
+                                            <input class="form-control" type="text" name="menu_name"  id="example-text-input">
+                                        </div>
+
+                                        <div class="form-group mb-3">
                                             <label for="example-text-input" class="form-label">Menu Image</label>
                                             <input class="form-control" name="image" type="file" id="image">
                                         </div>

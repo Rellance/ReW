@@ -184,10 +184,11 @@ class RestaurantController extends Controller
     }
     public function EditProduct($id)
     {
-        $id = Auth::guard('client')->id();
+        $cid = Auth::guard('client')->id();
         $category = Category::latest()->get();
         $city = City::latest()->get();
-        $menu = Menu::where('client_id',$id)->latest()->get();        $product = Product::find($id);
+        $menu = Menu::where('client_id', $cid)->latest()->get();
+        $product = Product::find($id);
         return view('client.backend.product.edit_product', compact('category', 'city', 'menu', 'product'));
     }
     // End Method 
