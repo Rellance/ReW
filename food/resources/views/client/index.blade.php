@@ -1,8 +1,19 @@
 @extends('client.client_dashboard')
 @section('client')
 
-<div class="page-content">
-    <div class="container-fluid">
+@php
+     $id = Auth::guard('client')->id();
+     $client = App\Models\Client::find($id);
+     $status = $client->status;
+ @endphp
+ 
+ <div class="page-content">
+     <div class="container-fluid">
+ 
+         @if ($status === '1')
+         <h4>Restaurant Account is <span class="text-success">Active</span> </h4>
+         
+        
 
         <!-- start page title -->
         <div class="row">
@@ -313,6 +324,10 @@
         </div> <!-- end row-->
         
     </div>
+    @else   
+         <h4>Restaurant Account is <span class="text-danger">InActive</span> </h4> 
+         <p class="text-danger"><b>Please wait, admin will check and approve your account.</b> </p> 
+         @endif
     <!-- container-fluid -->
 </div>
 
