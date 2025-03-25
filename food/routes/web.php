@@ -102,13 +102,20 @@
         Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant');
         Route::get('/clientChangeStatus','ClientChangeStatus');
         Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant');
-        
+    });
+
+    Route::controller(ManageController::class)->group(function () {
+        Route::get('/banner/all', 'AllBanner')->name('all.banner');
+        Route::post('/banner/store', 'StoreBanner')->name('banner.store');
+        Route::get('/banner/delete/{id}', 'DeleteBanner')->name('delete.banner');
+        Route::get('/banner/edit/{id}', 'EditBanner')->name('edit.banner');
+        Route::post('/banner/update', 'BannerUpdate')->name('banner.update');
     });
  
  
  }); // End Admin Middleware
  
- Route::middleware('client')->group(function () {
+ Route::middleware(['status','client'])->group(function () {
  
      Route::controller(RestaurantController::class)->group(function(){
          Route::get('/all/menu', 'AllMenu')->name('all.menu');
