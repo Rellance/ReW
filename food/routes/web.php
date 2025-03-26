@@ -9,7 +9,9 @@
  use App\Http\Controllers\Client\RestaurantController;
  use App\Http\Controllers\Client\CouponController;
  use App\Http\Controllers\Admin\ManageController;
- 
+ use App\Http\Controllers\Frontend\HomeController;
+
+
  // Route::get('/', function () {
  //     return view('welcome');
  // });
@@ -161,3 +163,9 @@
 
   /// ALL ROUTE FOR USER
   Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
+
+  Route::controller(HomeController::class)->group(function(){
+    Route::get('/reustaurant/deteils/{id}', 'RestaurantDetails')->name('res.detail');
+
+
+});

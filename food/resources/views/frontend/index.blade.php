@@ -14,6 +14,21 @@
                 @endphp
 
                 @foreach ($clients as $item)
+                    @php
+                        $products = App\Models\Product::where('client_id', $item->id)->limit(3)->get();
+                        $menuNames = $products->map(function ($product) {
+                                return $product->Menu ? $product->Menu->menu_name : 'No Menu';
+                            })->toArray();
+                            
+                            
+                        $menuNamesString = implode(' . ', $menuNames);
+                        $coupons = App\Models\Coupon::latest()
+                            ->where('client_id', $item->id)
+                            ->where('status', '1')
+                            ->first();
+
+                    @endphp
+
                     <div class="col-md-3">
                         <div class="item pb-3">
                             <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
@@ -22,25 +37,34 @@
                                                 class="icofont-star"></i> 3.1 (300+)</span></div>
                                     <div class="favourite-heart text-danger position-absolute"><a href="detail.html"><i
                                                 class="icofont-heart"></i></a></div>
+                                    @if ($coupons)                                              
                                     <div class="member-plan position-absolute"><span
                                             class="badge badge-dark">Promoted</span></div>
-                                    <a href="detail.html">
-                                        <img src="{{ asset('upload/client_images/'.$item->photo) }}" class="img-fluid item-img" style="width: 300px; height: 250px;">
+                                    @else
+                                    @endif        
+                                    <a href="{{ route('res.detail', $item->id) }}">
+                                        <img src="{{ asset('upload/client_images/' . $item->photo) }}"
+                                            class="img-fluid item-img" style="width: 300px; height: 250px;">
                                     </a>
                                 </div>
                                 <div class="p-3 position-relative">
                                     <div class="list-card-body">
-                                        <h6 class="mb-1"><a href="detail.html" class="text-black">{{ $item->name }}</a>
+                                        <h6 class="mb-1"><a href="{{ route('res.detail', $item->id) }}" class="text-black">{{ $item->name }}</a>
                                         </h6>
-                                        <p class="text-gray mb-3">North Indian • American • Pure veg</p>
+                                        <p class="text-gray mb-3">{{$menuNamesString}}</p>
                                         <p class="text-gray mb-3 time"><span
                                                 class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i
-                                                    class="icofont-wall-clock"></i> 20–25 min</span> <span
-                                                class="float-right text-black-50"> $250 FOR TWO</span></p>
+                                                    class="icofont-wall-clock"></i> 20–25 min</span></p>
                                     </div>
                                     <div class="list-card-badge">
-                                        <span class="badge badge-success">OFFER</span> <small>65% off | Use Coupon
-                                            OSAHAN50</small>
+                                        @if ($coupons)
+                                            <span class="badge badge-success">OFFER</span>
+                                            <small>{{ $coupons->discount }}% off | Use Coupon {{ $coupons->coupon_name}}</small>                                               
+                                        @else
+                                            <span class="badge badge-success">OFFER</span>
+                                            <small>No Coupon Available</small>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
