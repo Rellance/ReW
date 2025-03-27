@@ -21,7 +21,7 @@
                             })->toArray();
                             
                             
-                        $menuNamesString = implode(' . ', $menuNames);
+                        $menuNamesString = implode(' • ', $menuNames);
                         $coupons = App\Models\Coupon::latest()
                             ->where('client_id', $item->id)
                             ->where('status', '1')
