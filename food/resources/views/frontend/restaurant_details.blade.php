@@ -139,48 +139,52 @@
                          </div>
                          @endforeach
                       </div>
+
+                      @foreach ($menus as $menu)                          
+                      
                       <div class="row">
-                         <h5 class="mb-4 mt-3 col-md-12">Starters <small class="h6 text-black-50">3 ITEMS</small></h5>
+                         <h5 class="mb-4 mt-3 col-md-12">{{ $menu->menu_name }} <small class="h6 text-black-50">{{ $menu->products->count() }} ITEMS</small></h5>
                          <div class="col-md-12">
                             <div class="bg-white rounded border shadow-sm mb-4">
+                              @foreach ($menu->products as $product)
+
                                <div class="menu-list p-3 border-bottom">
                                  <a class="btn btn-outline-secondary btn-sm  float-right" href="#">ADD</a>
-                                  <div class="media">
-                                     <img class="mr-3 rounded-pill" src="{{asset('frontend/img/5.jpg')}}" alt="Generic placeholder image">
+
+
+                                     
+                                 
+                                  <div class="media">   
+                                     <img class="mr-3 rounded-pill" src="{{asset($product->image)}}" alt="Generic placeholder image">
                                      <div class="media-body">
-                                        <h6 class="mb-1">Veg Spring Roll</h6>
-                                        <p class="text-gray mb-0">$314 - 12" (30 cm)</p>
-                                     </div>
+                                        <h6 class="mb-1">{{ $product->name }}</h6>
+                                        @if ($product->size == NULL)
+                                        <p class="text-gray mb-0"></p>
+                                        @else
+                                        <p class="text-gray mb-0">({{ $product->size}} cm)</p>
+   
+                                        @endif
+                                     </div>   
                                   </div>
+                                 
                                </div>
+                               @endforeach
                             </div>
                          </div>
                       </div>
+                      @endforeach
                    </div>
                    <div class="tab-pane fade" id="pills-gallery" role="tabpanel" aria-labelledby="pills-gallery-tab">
                       <div id="gallery" class="bg-white rounded shadow-sm p-4 mb-4">
                          <div class="restaurant-slider-main position-relative homepage-great-deals-carousel">
-                            <div class="owl-carousel owl-theme homepage-ad">
+                            <div class="owl-carousel owl-theme homepage-ad">  
+                              @foreach ($galleries as $index => $gallery)                                                              
                                <div class="item">
-                                  <img class="img-fluid" src="img/gallery/1.png">
+                                  <img class="img-fluid" src="{{ asset($gallery->gallery_img) }}">
+                                  <div class="position-absolute restaurant-slider-pics bg-dark text-white">{{ $index + 1 }} of {{ $galleries->count() }} Photos</div>
                                </div>
-                               <div class="item">
-                                  <img class="img-fluid" src="img/gallery/2.png">
-                               </div>
-                               <div class="item">
-                                  <img class="img-fluid" src="img/gallery/3.png">
-                               </div>
-                               <div class="item">
-                                  <img class="img-fluid" src="img/gallery/1.png">
-                               </div>
-                               <div class="item">
-                                  <img class="img-fluid" src="img/gallery/2.png">
-                               </div>
-                               <div class="item">
-                                  <img class="img-fluid" src="img/gallery/3.png">
-                               </div>
+                               @endforeach
                             </div>
-                            <div class="position-absolute restaurant-slider-pics bg-dark text-white">2 of 14 Photos</div>
                             <div class="position-absolute restaurant-slider-view-all"><button type="button" class="btn btn-light bg-white">See all Photos</button></div>
                          </div>
                       </div>
@@ -189,17 +193,15 @@
                       <div id="restaurant-info" class="bg-white rounded shadow-sm p-4 mb-4">
                          <div class="address-map float-right ml-5">
                             <div class="mapouter">
-                               <div class="gmap_canvas"><iframe width="300" height="170" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=9&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
+                               <div class="gmap_canvas"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4649.364301680314!2d24.944690277167673!3d60.16696907503074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46920bcecb53b045%3A0xd80411aa06b8ccbe!2sEtel%C3%A4esplanadi%2014%2C%2000130%20Helsinki!5e1!3m2!1sen!2sfi!4v1743666008028!5m2!1sen!2sfi" width="350" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
                             </div>
                          </div>
                          <h5 class="mb-4">Restaurant Info</h5>
-                         <p class="mb-3">Jagjit Nagar, Near Railway Crossing, 
-                            <br> Near Model Town, Ludhiana, PUNJAB
+                         <p class="mb-3">{{ $client->addres }}</p>
                          </p>
-                         <p class="mb-2 text-black"><i class="icofont-phone-circle text-primary mr-2"></i> +91 01234-56789, +91 01234-56789</p>
-                         <p class="mb-2 text-black"><i class="icofont-email text-primary mr-2"></i> iamosahan@gmail.com, osahaneat@gmail.com</p>
-                         <p class="mb-2 text-black"><i class="icofont-clock-time text-primary mr-2"></i> Today  11am – 5pm, 6pm – 11pm
-                            <span class="badge badge-success"> OPEN NOW </span>
+                         <p class="mb-2 text-black"><i class="icofont-phone-circle text-primary mr-2"></i>{{ $client->phone }}</p>
+                         <p class="mb-2 text-black"><i class="icofont-email text-primary mr-2"></i> {{ $client->email }}</p>
+                         <p class="mb-2 text-black"><i class="icofont-clock-time text-primary mr-2"></i> {{ $client->shop_info }}
                          </p>
                          <hr class="clearfix">
                          <p class="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <a class="text-info font-weight-bold" href="#">Venue Map</a></p>
@@ -217,6 +219,8 @@
                          </div>
                       </div>
                    </div>
+
+
                    <div class="tab-pane fade" id="pills-book" role="tabpanel" aria-labelledby="pills-book-tab">
                       <div id="book-a-table" class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
                          <h5 class="mb-4">Book A Table</h5>

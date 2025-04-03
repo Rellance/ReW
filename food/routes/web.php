@@ -165,7 +165,7 @@
   Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
 
   Route::controller(HomeController::class)->group(function(){
-    Route::get('/reustaurant/deteils/{id}', 'RestaurantDetails')->name('res.detail');
-
+    Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.detail');
+    Route::post('/add-favourite/{id}', 'AddFavourite');
 
 });
