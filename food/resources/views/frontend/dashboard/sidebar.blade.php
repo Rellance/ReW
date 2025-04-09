@@ -30,6 +30,11 @@ $profileData = App\Models\User::find($id);
                            </a>
                        </li>
                        <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('all.favourites') ? 'active' : '' }}" href="{{ route('all.favourites') }}">
+                            <i class="icofont-food-cart"></i> Favourites
+                        </a>
+                    </li>
+                       <li class="nav-item">
                            <a class="nav-link" href="#">
                                <i class="icofont-food-cart"></i> Orders
                            </a>
@@ -37,11 +42,6 @@ $profileData = App\Models\User::find($id);
                        <li class="nav-item">
                            <a class="nav-link" href="#">
                                <i class="icofont-sale-discount"></i> Offers
-                           </a>
-                       </li>
-                       <li class="nav-item">
-                           <a class="nav-link" href="#">
-                               <i class="icofont-heart"></i> Favourites
                            </a>
                        </li>
                        <li class="nav-item">

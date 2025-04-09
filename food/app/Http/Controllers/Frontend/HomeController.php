@@ -39,14 +39,28 @@ class HomeController extends Controller
                     'user_id'=> Auth::id(),
                     'client_id' => $id,
                 ]);
-                return response()->json(['success' => 'Your Wishlist Addedd Successfully']);
+                return response()->json(['success' => 'Your wishlist added successfully']);
             } else {
-                return response()->json(['error' => 'This product has already on your wishlist']);
+                return response()->json(['error' => 'This product is already in your wishlist']);
             } 
         }else{
-            return response()->json(['error' => 'First Login Your Account']);
+            return response()->json(['error' => 'Please log in to your account first']);
         }
 
+    }
+    //End Method
+    public function AllFavourites(){
+        $favourites = Favourite::where('user_id', Auth::id())->latest()->get();
+        return view('frontend.dashboard.all_favourites', compact('favourites'));
+    }
+    //End Method
+    public function RemoveFavourites($id){
+        Favourite::find($id)->delete();
+    $notification = array(
+        'message' => 'Your Wishlist Removed Successfully',
+        'alert-type' => 'success'
+    );
+    return redirect()->back()->with($notification);
     }
     //End Method
 }
