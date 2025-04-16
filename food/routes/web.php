@@ -10,6 +10,7 @@
  use App\Http\Controllers\Client\CouponController;
  use App\Http\Controllers\Admin\ManageController;
  use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\CartController;
 
 
  // Route::get('/', function () {
@@ -20,14 +21,14 @@
  
  
  Route::get('/dashboard', function () {
-     return view('frontend.dashboard.dashboard');
+     return view('frontend.dashboard.profile');
  })->middleware(['auth', 'verified'])->name('dashboard');
  
  
  Route::middleware('auth')->group(function () {
      Route::post('/profile/store', [UserController::class, 'ProfileStore'])->name('profile.store');
      Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
-     Route::get('/change/password', [UserController::class, 'ChangePassword'])->name('change.password');
+     Route::get('/change/password', [UserController::class, 'UserChangePassword'])->name('change.password');
      Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
     //Get wishlist
      Route::get('/all/favourites', [HomeController::class, 'AllFavourites'])->name('all.favourites');
@@ -173,4 +174,10 @@
     Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.detail');
     Route::post('/add-favourite/{id}', 'AddFavourite');
 
+});
+
+Route::controller(CartController::class)->group(function(){
+    Route::get('/add_to_cart/{id}', 'AddToCart')->name('add_to_cart');
+    Route::post('/cart/update', 'UpdateCart')->name('cart.update');
+    Route::post('/cart/remove', 'RemoveCart')->name('cart.remove');
 });
