@@ -45,22 +45,16 @@ class CartController extends Controller
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] = $request->quantity;
             session()->put('cart', $cart);
-            $notification = array(
-                'message' => 'Cart updated successfully',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with($notification);
         }
+        return response()->json(['message' => 'Cart updated successfully', 'alert-type' => 'success']);
     }
     public function RemoveCart(Request $request)
     {
-        if ($request->id) {
-            $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            return response()->json(['success' => 'Product removed successfully']);
+        $cart = session()->get('cart', []);
+        if (isset($cart[$request->id])) {
+            unset($cart[$request->id]);
+            session()->put('cart', $cart);
         }
+        return response()->json(['message' => 'Cart removed successfully', 'alert-type' => 'success']);
     }
 }

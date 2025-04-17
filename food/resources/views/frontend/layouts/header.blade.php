@@ -60,8 +60,7 @@
                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                        <i class="fas fa-shopping-basket"></i> Cart
-                       <span class="badge badge-success">5</span>
-                   </a>
+                       <span class="badge badge-success">{{ count((array) session('cart')) }}</span>                   </a>
                    <div class="dropdown-menu dropdown-cart-top p-0 dropdown-menu-right shadow-sm border-0">
                        <div class="dropdown-cart-top-header p-4">
                            <img class="img-fluid mr-3" alt="osahan" src="img/cart.jpg">

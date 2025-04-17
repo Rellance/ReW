@@ -196,17 +196,20 @@
                                                         <a class="btn btn-outline-secondary btn-sm  float-right"
                                                             href="{{ route('add_to_cart', $product->id) }}">ADD</a>
 
-
-
-
                                                         <div class="media">
-                                                            <img class="mr-3 rounded-pill"
-                                                                src="{{ asset($product->image) }}"
-                                                                alt="Generic placeholder image">
+                                                            <img class="mr-3 rounded-pill" src="{{ asset($product->image) }}" alt="{{ $product->name }}">
                                                             <div class="media-body">
                                                                 <h6 class="mb-1">{{ $product->name }}</h6>
-                                                                <p class="text-gray mb-0">{{ $product->price }}$
-                                                                    ({{ $product->size ?? '' }}cm)
+                                                                <p class="text-gray mb-0">
+                                                                    @if ($product->discount_price)
+                                                                        <span class="text-danger"><del>${{ $product->price }}</del></span>
+                                                                        ${{ $product->discount_price }}
+                                                                    @else
+                                                                        ${{ $product->price }}
+                                                                    @endif
+                                                                    @if ($product->size)
+                                                                        <span>({{ $product->size }}cm)</span>
+                                                                    @endif
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -491,14 +494,32 @@
                         </div>
                     </div>
                 </div>
+                @php
+                    use Carbon\Carbon;
+                    $coupon = App\Models\Coupon::where('validity', '>=', Carbon::now()->format('Y-m-d'))
+                        ->where('client_id', $client->id)
+                        ->where('status', '1')
+                        ->latest()
+                        ->first();
+                @endphp
                 <div class="col-md-4">
                     <div class="pb-2">
                         <div
                             class="bg-white rounded shadow-sm text-white mb-4 p-4 clearfix restaurant-detailed-earn-pts card-icon-overlap">
-                            <img class="img-fluid float-left mr-3" src="img/earn-score-icon.png">
+                            <img class="img-fluid float-left mr-3" src="{{ asset('frontend/img/earn-score-icon.png') }}"
+                                alt="Offer Icon">
                             <h6 class="pt-0 text-primary mb-1 font-weight-bold">OFFER</h6>
-                            <p class="mb-0">60% off on orders above $99 | Use coupon <span
-                                    class="text-danger font-weight-bold">OSAHAN50</span></p>
+                            @if ($coupon)
+                                <p class="mb-0">
+                                    Get <span class="text-danger font-weight-bold">{{ $coupon->discount }}%</span> off on
+                                    orders above $99
+                                </p>
+                                <p class="mb-0">
+                                    <span class="text-danger font-weight-bold">{{ $coupon->coupon_name }}</span>
+                                </p>
+                            @else
+                                <p class="mb-0">No Coupon Available</p>
+                            @endif
                             <div class="icon-overlap">
                                 <i class="icofont-sale-discount"></i>
                             </div>
@@ -550,7 +571,6 @@
                                 <h6 class="font-weight-bold text-right mb-2">Subtotal : <span
                                         class="text-danger">${{ $total }}</span></h6>
                                 <p class="seven-color mb-1 text-right">Extra charges may apply</p>
-                                <p class="text-black mb-0 text-right">You have saved $955 on the bill</p>
                             </div>
                             <a href="checkout.html" class="btn btn-success btn-block btn-lg">Checkout <i
                                     class="icofont-long-arrow-right"></i></a>
@@ -563,6 +583,17 @@
 
     <script>
         $(document).ready(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            });
             $('.inc').on('click', function() {
                 var id = $(this).data('id');
                 var input = $(this).closest('span').find('input');
@@ -594,9 +625,12 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        if (response.status == 'success') {
-                           $('#cart-container').load(location.href + ' #cart-container');
-                        }
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Quantity Updated'
+                        }).then(() => {
+                            location.reload();
+                        });
                     }
                 });
             }
@@ -610,9 +644,12 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        if (response.status == 'success') {
-                           $('#cart-container').load(location.href + ' #cart-container');
-                        }
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Quantity Updated'
+                        }).then(() => {
+                            location.reload();
+                        });
                     }
                 });
             }
