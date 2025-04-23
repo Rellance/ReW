@@ -1,6 +1,7 @@
 @extends('frontend.dashboard.dashboard')
 @section('dashboard')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
 
     @php
         $products = App\Models\Product::where('client_id', $client->id)->limit(3)->get();
@@ -197,12 +198,15 @@
                                                             href="{{ route('add_to_cart', $product->id) }}">ADD</a>
 
                                                         <div class="media">
-                                                            <img class="mr-3 rounded-pill" src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                                                            <img class="mr-3 rounded-pill"
+                                                                src="{{ asset($product->image) }}"
+                                                                alt="{{ $product->name }}">
                                                             <div class="media-body">
                                                                 <h6 class="mb-1">{{ $product->name }}</h6>
                                                                 <p class="text-gray mb-0">
                                                                     @if ($product->discount_price)
-                                                                        <span class="text-danger"><del>${{ $product->price }}</del></span>
+                                                                        <span
+                                                                            class="text-danger"><del>${{ $product->price }}</del></span>
                                                                         ${{ $product->discount_price }}
                                                                     @else
                                                                         ${{ $product->price }}
@@ -509,6 +513,7 @@
                             <img class="img-fluid float-left mr-3" src="{{ asset('frontend/img/earn-score-icon.png') }}"
                                 alt="Offer Icon">
                             <h6 class="pt-0 text-primary mb-1 font-weight-bold">OFFER</h6>
+
                             @if ($coupon)
                                 <p class="mb-0">
                                     Get <span class="text-danger font-weight-bold">{{ $coupon->discount }}%</span> off on
@@ -565,11 +570,61 @@
                                 @endif
                             </div>
 
+                            @if (Session::has('coupon'))
+
+                                <div class="mb-2 bg-white rounded p-2 clearfix">
+                                    <p class="mb-1">Item Total <span
+                                            class="float-right text-dark">{{ count((array) session('cart')) }}</span></p>
+                                    <p class="mb-1">Coupon Name <span
+                                            class="float-right text-dark">{{ session()->get('coupon')['coupon_name'] }}
+                                            ( {{ session()->get('coupon')['discount'] }} %)</span>
+                                        <a type="submit" onclick="couponRemove()"><i class="icofont-ui-delete float-right" style="color: red;"></i></a>
+                                    </p>
+                                    <p class="mb-1">Total Discount <span class="text-info" data-toggle="tooltip"
+                                            data-placement="top" title="Total discount breakup">
+                                            <i class="icofont-info-circle"></i>
+                                        </span>
+                                        <span class="float-right text-success">
+                                            @if (Session::has('coupon'))
+                                                ${{ $total - Session::get('coupon')['discount_amount'] }}
+                                            @else
+                                                ${{ $total }}
+                                            @endif
+                                        </span>
+                                    </p>
+                                    <hr />
+                                    <h6 class="font-weight-bold mb-0">TO PAY <span class="float-right">
+                                            @if (Session::has('coupon'))
+                                                ${{ Session::get('coupon')['discount_amount'] }}
+                                            @else
+                                                ${{ $total }}
+                                            @endif
+                                        </span></h6>
+                                </div>
+                            @else
+                                <div class="mb-2 bg-white rounded p-2 clearfix">
+                                    <div class="input-group input-group-sm mb-2">
+                                        <input type="text" class="form-control" placeholder="Enter promo code"
+                                            id="coupon_name">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit" id="button-addon2"><i
+                                                    class="icofont-sale-discount" onclick="ApplyCoupon()"></i>
+                                                APPLY</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
 
                             <div class="mb-2 bg-white rounded p-2 clearfix">
                                 <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
-                                <h6 class="font-weight-bold text-right mb-2">Subtotal : <span
-                                        class="text-danger">${{ $total }}</span></h6>
+                                <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">
+                                        @if (Session::has('coupon'))
+                                            ${{ Session::get('coupon')['discount_amount'] }}
+                                        @else
+                                            ${{ $total }}
+                                        @endif
+                                    </span></h6>
                                 <p class="seven-color mb-1 text-right">Extra charges may apply</p>
                             </div>
                             <a href="checkout.html" class="btn btn-success btn-block btn-lg">Checkout <i

@@ -180,4 +180,7 @@ Route::controller(CartController::class)->group(function(){
     Route::get('/add_to_cart/{id}', 'AddToCart')->name('add_to_cart');
     Route::post('/cart/update', 'UpdateCart')->name('cart.update');
     Route::post('/cart/remove', 'RemoveCart')->name('cart.remove');
+    Route::post('/apply-coupon', 'ApplyCoupon');
+    Route::get('/remove-coupon', 'RemoveCoupon');
 });
+
