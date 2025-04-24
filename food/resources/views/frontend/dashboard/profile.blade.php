@@ -46,7 +46,7 @@ $profileData = App\Models\User::find($id);
         <div class="mt-3 mt-lg-0">
             <div class="mb-3">
                 <label for="example-text-input" class="form-label">Address</label>
-                <input class="form-control" name="address" type="text" value="{{ $profileData->address }}" id="example-text-input">
+                <input class="form-control" name="address" type="text" value="{{ $profileData->addres }}" id="example-text-input">
             </div>
             <div class="mb-3">
                 <label for="example-text-input" class="form-label">Profile Image</label>
