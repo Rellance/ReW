@@ -33,12 +33,13 @@ $profileData = App\Models\User::find($id);
                         <a class="nav-link {{ request()->routeIs('all.favourites') ? 'active' : '' }}" href="{{ route('all.favourites') }}">
                             <i class="icofont-food-cart"></i> Favourites
                         </a>
-                    </li>
-                       <li class="nav-item">
-                           <a class="nav-link" href="#">
-                               <i class="icofont-food-cart"></i> Orders
-                           </a>
                        </li>
+                       <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('user.order.list') ? 'active' : '' }}" href="{{ route('user.order.list') }}">
+                            <i class="icofont-food-cart"></i> Orders
+                        </a>
+                       </li>
+
                        <li class="nav-item">
                            <a class="nav-link" href="#">
                                <i class="icofont-sale-discount"></i> Offers

@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     //Get wishlist
     Route::get('/all/favourites', [HomeController::class, 'AllFavourites'])->name('all.favourites');
     Route::get('/remove/favourites/{id}', [HomeController::class, 'RemoveFavourites'])->name('remove.favourite');
+
+    Route::controller(ManageOrderController::class)->group(function () {
+        Route::get('/user/order/list', 'UserOrderList')->name('user.order.list');
+        Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details');
+    });
 });
 
 
@@ -127,8 +132,9 @@ Route::middleware('admin')->group(function () {
         Route::get('/pending_to_confirm/{id}', 'PendingToConfirm')->name('pending_to_confirm');
         Route::get('/confirm_to_processing/{id}', 'ConfirmToProcessing')->name('confirm_to_processing');
         Route::get('/processing_to_delivered/{id}', 'ProcessingToDelivered')->name('processing_to_delivered');
-
     });
+
+    
 }); // End Admin Middleware
 
 Route::middleware(['status', 'client'])->group(function () {
@@ -167,6 +173,11 @@ Route::middleware(['status', 'client'])->group(function () {
         Route::get('/edit/coupon/{id}', 'EditCoupon')->name('edit.coupon');
         Route::post('/update/coupon', 'UpdateCoupon')->name('coupon.update');
         Route::get('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
+    });
+
+    Route::controller(ManageOrderController::class)->group(function () {
+        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
+        Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details');
     });
 });
 // End Client Middleware

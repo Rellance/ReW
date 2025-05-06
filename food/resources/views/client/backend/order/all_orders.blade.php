@@ -1,6 +1,5 @@
-@extends('admin.dashboard')
-@section('admin')
-
+@extends('client.client_dashboard')
+@section('client')
     <div class="page-content">
         <div class="container-fluid">
 
@@ -8,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Pending Order</h4>
+                        <h4 class="mb-sm-0 font-size-18">Client All Orders</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                             </ol>
@@ -35,19 +34,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $key => $item)
+                                    @foreach ($orderItemGroupData as $key => $orderItem)
+                                        @php
+                                            $firstItem = $orderItem->first();
+                                            $order = $firstItem->order;
+                                        @endphp
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item->order_date}}</td>
-                                            <td>{{ $item->invoice_no }}</td>
-                                            <td>{{ $item->amount }}</td>
-                                            <td>{{ $item->payment_method }}</td>
-                                            <td><span class="badge bg-primary">{{ $item->status }}</span></td>
+                                            <td>{{ $order->order_date }}</td>
+                                            <td>{{ $order->invoice_no }}</td>
+                                            <td>${{ $order->amount }}</td>
+                                            <td>{{ $order->payment_method }}</td>
                                             <td>
-                                                <a href="{{ route('admin.order.details', $item->id) }}" class="btn btn-info waves-effect waves-light">
+                                                @if ($order->status == 'Pending')
+                                                    <span class="badge bg-info">Pending</span>
+                                                @elseif ($order->status == 'confirm')
+                                                    <span class="badge bg-primary">Confirm</span>
+                                                @elseif ($order->status == 'processing')
+                                                    <span class="badge bg-warning">Processing</span>
+                                                @elseif ($order->status == 'delivered')
+                                                    <span class="badge bg-success">Delivered</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('client.order.details', $order->id) }}"
+                                                    class="btn btn-info waves-effect waves-light">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -59,5 +72,4 @@
             </div>
         </div>
     </div>
-
 @endsection
