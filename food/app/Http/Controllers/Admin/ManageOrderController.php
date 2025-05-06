@@ -11,6 +11,8 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ManageOrderController extends Controller
 {
@@ -62,14 +64,14 @@ class ManageOrderController extends Controller
 
 
     public function ConfirmToProcessing($id)
-{
-    Order::where('id', $id)->update(['status' => 'processing']);
-    $notification = array(
-        'message' => 'Order moved to Processing Successfully',
-        'alert-type' => 'success'
-    );
-    return redirect()->back()->with($notification);
-}
+    {
+        Order::where('id', $id)->update(['status' => 'processing']);
+        $notification = array(
+            'message' => 'Order moved to Processing Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
 
     public function ProcessingToDelivered($id)
     {
@@ -88,7 +90,7 @@ class ManageOrderController extends Controller
             ->where('client_id', $clientId)->orderBy('id', 'DESC')
             ->get()
             ->groupBy('order_id');
-            return view('client.backend.order.all_orders', compact('orderItemGroupData'));
+        return view('client.backend.order.all_orders', compact('orderItemGroupData'));
     }
 
     public function ClientOrderDetails($id)
@@ -123,5 +125,23 @@ class ManageOrderController extends Controller
         }
 
         return view('frontend.dashboard.order.user_order_details', compact('order', 'orderItems', 'totalPrice'));
+    }
+    public function UserInvoiceDownload($id)
+    {
+        $order = Order::with('user')->where('id', $id)->where('user_id', Auth::id())->first();
+        $orderItems = OrderItem::with('product')->where('order_id', $id)->orderBy('id', 'DESC')->get();
+        $totalPrice = 0;
+
+        foreach ($orderItems as $item) {
+            $totalPrice += $item->price * $item->qty;
+        }
+        $pdf = Pdf::loadView('frontend.dashboard.order.user_invoice_download', compact('order', 'orderItems', 'totalPrice'))
+        ->setPaper('a4')
+        ->setOptions([
+            'tempDir' => public_path('temp'),
+            'chroot' => public_path(),
+        ]);
+
+        return $pdf->download('invoice.pdf');
     }
 }
