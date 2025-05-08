@@ -135,10 +135,11 @@ Route::middleware('admin')->group(function () {
         Route::get('/confirm_to_processing/{id}', 'ConfirmToProcessing')->name('confirm_to_processing');
         Route::get('/processing_to_delivered/{id}', 'ProcessingToDelivered')->name('processing_to_delivered');
     });
-
     Route::controller(ReportController::class)->group(function () {
         Route::get('/admin/all/reports', 'AdminAllReports')->name('admin.all.reports');
-
+        Route::post('/admin/search/bydate', 'AdminSearchByDate')->name('admin.search.bydate');
+        Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
+        Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
     });
 }); // End Admin Middleware
 
@@ -183,6 +184,12 @@ Route::middleware(['status', 'client'])->group(function () {
     Route::controller(ManageOrderController::class)->group(function () {
         Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
         Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details');
+    });
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.report');
+        Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
+        Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('client.search.bymonth');
+        Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
     });
 });
 // End Client Middleware
