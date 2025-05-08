@@ -158,11 +158,10 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
-                        <span data-key="t-authentication">Authentication</span>
+                        <span data-key="t-authentication">Manage Reports</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="auth-login.html" data-key="t-login">Login</a></li>
-                        <li><a href="auth-register.html" data-key="t-register">Register</a></li>
+                        <li><a href="{{ route('admin.all.reports') }}">All Reports</a></li>
                     </ul>
                 </li>
 

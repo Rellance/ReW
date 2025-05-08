@@ -95,8 +95,9 @@ class ManageOrderController extends Controller
 
     public function ClientOrderDetails($id)
     {
+        $clientId = Auth::guard('client')->id();
         $order = Order::with('user')->where('id', $id)->first();
-        $orderItems = OrderItem::with('product')->where('order_id', $id)->orderBy('id', 'DESC')->get();
+        $orderItems = OrderItem::with('product')->where('order_id', $id)->where('client_id',$clientId)->orderBy('id', 'DESC')->get();
 
         $totalPrice = 0;
 
@@ -121,7 +122,10 @@ class ManageOrderController extends Controller
         $totalPrice = 0;
 
         foreach ($orderItems as $item) {
-            $totalPrice += $item->price * $item->qty;
+            $price = $item->price ?? 0; // Если $item->price равно null, используем 0
+            $qty = $item->qty ?? 0;     // Если $item->qty равно null, используем 0
+    
+            $totalPrice += (float) $price * (int) $qty;
         }
 
         return view('frontend.dashboard.order.user_order_details', compact('order', 'orderItems', 'totalPrice'));

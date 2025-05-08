@@ -13,7 +13,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Admin\ManageOrderController;
-
+use App\Http\Controllers\Admin\ReportController;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
@@ -135,7 +136,10 @@ Route::middleware('admin')->group(function () {
         Route::get('/processing_to_delivered/{id}', 'ProcessingToDelivered')->name('processing_to_delivered');
     });
 
-    
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/admin/all/reports', 'AdminAllReports')->name('admin.all.reports');
+
+    });
 }); // End Admin Middleware
 
 Route::middleware(['status', 'client'])->group(function () {

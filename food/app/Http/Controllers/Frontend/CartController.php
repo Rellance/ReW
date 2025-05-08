@@ -113,32 +113,37 @@ class CartController extends Controller
         return response()->json(['success' => 'Coupon removed successfully']);
     }
     
-    public function Checkout(){
-        if (Auth::check()){
+    public function Checkout() {
+        if (Auth::check()) {
             $cart = session()->get('cart', []);
             $totalAmount = 0;
-            foreach($cart as $car){
-                $totalAmount += $car['price'];
+    
+            foreach ($cart as $car) {
+                // Безопасная проверка и преобразование цены
+                $price = isset($car['price']) && is_numeric(str_replace(',', '.', $car['price']))
+                    ? (float) str_replace(',', '.', $car['price'])
+                    : 0;
+    
+                $totalAmount += $price;
             }
-
+    
             if ($totalAmount > 0) {
                 return view('frontend.checkout.view_checkout', compact('cart'));
             } else {
-                $notification = array(
-                    'message' => 'Shoppping Cart is Empty',
+                $notification = [
+                    'message' => 'Shopping Cart is Empty',
                     'alert-type' => 'error'
-                );
+                ];
                 return redirect()->to('/')->with($notification);
             }
-            
     
-
-        }else{
-            $notification = array(
+        } else {
+            $notification = [
                 'message' => 'Please Login First',
                 'alert-type' => 'error'
-            );
+            ];
             return redirect()->route('login')->with($notification);
         }
     }
+    
 }

@@ -535,32 +535,43 @@
                             <h5 class="mb-1 text-white">Your Order</h5>
                             <p class="mb-4 text-white">{{ count((array) session('cart')) }} ITEMS</p>
                             <div class="bg-white rounded shadow-sm mb-2">
-
-                                @php $total = 0 @endphp
+                    
+                                @php $total = 0; @endphp
                                 @if (session('cart'))
                                     @foreach (session('cart') as $id => $details)
                                         @php
-                                            $total += $details['price'] * $details['quantity'];
+                                            // Защита от нечисловых значений и запятых вместо точек
+                                            $price = isset($details['price']) && is_numeric(str_replace(',', '.', $details['price'])) 
+                                                ? (float) str_replace(',', '.', $details['price']) 
+                                                : 0;
+                    
+                                            $quantity = isset($details['quantity']) && is_numeric($details['quantity']) 
+                                                ? (int) $details['quantity'] 
+                                                : 0;
+                    
+                                            $itemTotal = $price * $quantity;
+                                            $total += $itemTotal;
                                         @endphp
-
+                    
                                         <div class="gold-members p-2 border-bottom">
-                                            <p class="text-gray mb-0 float-right ml-2">
-                                                ${{ $details['price'] * $details['quantity'] }}</p>
+                                            <p class="text-gray mb-0 float-right ml-2">${{ number_format($itemTotal, 2) }}</p>
                                             <span class="count-number float-right">
-                                                <button class="btn btn-outline-secondary  btn-sm left dec"
-                                                    data-id="{{ $id }}"> <i class="icofont-minus"></i>
+                                                <button class="btn btn-outline-secondary btn-sm left dec" data-id="{{ $id }}">
+                                                    <i class="icofont-minus"></i>
                                                 </button>
                                                 <input class="count-number-input" type="text"
-                                                    value="{{ $details['quantity'] }}" readonly="">
-                                                <button class="btn btn-outline-secondary btn-sm right inc"
-                                                    data-id="{{ $id }}"> <i class="icofont-plus"></i> </button>
-                                                <button class="btn btn-outline-danger btn-sm right remove"
-                                                    data-id="{{ $id }}"> <i class="icofont-trash"></i>
+                                                       value="{{ $quantity }}" readonly="">
+                                                <button class="btn btn-outline-secondary btn-sm right inc" data-id="{{ $id }}">
+                                                    <i class="icofont-plus"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm right remove" data-id="{{ $id }}">
+                                                    <i class="icofont-trash"></i>
                                                 </button>
                                             </span>
                                             <div class="media">
-                                                <div class="mr-2"><img src="{{ asset($details['image']) }}"
-                                                        width="25px"></div>
+                                                <div class="mr-2">
+                                                    <img src="{{ asset($details['image']) }}" width="25px">
+                                                </div>
                                                 <div class="media-body">
                                                     <p class="mt-1 mb-0 text-black">{{ $details['name'] }}</p>
                                                 </div>

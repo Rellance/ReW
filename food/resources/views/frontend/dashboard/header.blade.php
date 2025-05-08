@@ -108,11 +108,25 @@
                                 @if (session('cart'))
                                     @foreach (session('cart') as $id => $details)
                                         @php
-                                            $total += $details['price'] * $details['quantity'];
+                                            $price =
+                                                isset($details['price']) &&
+                                                is_numeric(str_replace(',', '.', $details['price']))
+                                                    ? (float) str_replace(',', '.', $details['price'])
+                                                    : 0;
+
+                                            $quantity =
+                                                isset($details['quantity']) && is_numeric($details['quantity'])
+                                                    ? (int) $details['quantity']
+                                                    : 0;
+
+                                            $total += $price * $quantity;
                                         @endphp
-                                        <p class="mb-2"><i class="icofont-ui-press text-danger food-item"></i>
-                                            {{ $details['name'] }} x {{ $details['quantity'] }} <span
-                                                class="float-right text-secondary">${{ $details['price'] * $details['quantity'] }}</span>
+
+                                        <p class="mb-2">
+                                            <i class="icofont-ui-press text-danger food-item"></i>
+                                            {{ $details['name'] }} x {{ $quantity }}
+                                            <span
+                                                class="float-right text-secondary">${{ number_format($total, 2) }}</span>
                                         </p>
                                     @endforeach
                                 @endif
@@ -128,7 +142,8 @@
                                     </span></p>
                             </div>
                             <div class="dropdown-cart-top-footer border-top p-2">
-                                <a class="btn btn-success btn-block btn-lg" href="{{ route('checkout') }}"> Checkout</a>
+                                <a class="btn btn-success btn-block btn-lg" href="{{ route('checkout') }}">
+                                    Checkout</a>
                             </div>
                         </div>
                     </li>
