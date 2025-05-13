@@ -14,7 +14,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Admin\ReportController;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
+use App\Http\Controllers\Frontend\ReviewController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
@@ -188,8 +188,9 @@ Route::middleware(['status', 'client'])->group(function () {
     Route::controller(ReportController::class)->group(function () {
         Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.report');
         Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
-        Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('client.search.bymonth');
-        Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
+        Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
+        Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
+
     });
 });
 // End Client Middleware
@@ -213,4 +214,9 @@ Route::controller(CartController::class)->group(function () {
 
 Route::controller(OrderController::class)->group(function () {
     Route::post('/cash_order', 'CashOrder')->name('cash.order');
+});
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::post('/store/review', 'StoreReview')->name('store.review');  
+    
 });

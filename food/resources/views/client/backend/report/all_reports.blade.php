@@ -126,7 +126,7 @@
 
                                         <div class="col-sm-4">
                                             <div class="card">
-                                                <form id="myForm" action="{{ route('admin.search.byyear') }}" method="post"
+                                                <form id="myForm" action="{{ route('client.search.byyear') }}" method="post"
                                                     enctype="multipart/form-data">
                                                     @csrf
 

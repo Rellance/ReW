@@ -9,7 +9,9 @@ use App\Models\Favourite;
  use App\Models\Menu;
  use App\Models\Gallery;
  use Carbon\Carbon;
- use Illuminate\Support\Facades\Auth; 
+ use Illuminate\Support\Facades\Auth;
+ use App\Models\Review;
+
 
 class HomeController extends Controller
 {
@@ -28,7 +30,23 @@ class HomeController extends Controller
 
         $galleries = Gallery::where('client_id', $id)->get();
 
-        return view('frontend.restaurant_details', compact('client', 'menus', 'galleries'));
+        $reviews = Review::where('client_id', $client->id)->get();
+        $totalReviews = $reviews->count();
+        $totalRating = $reviews->sum('rating');
+        $averageRating = $totalReviews > 0 ? round($totalRating / $totalReviews, 1) : 0;
+
+        $ratingCounts = [
+            '5' => $reviews->where('rating', 5)->count(),
+            '4' => $reviews->where('rating', 4)->count(),
+            '3' => $reviews->where('rating', 3)->count(),
+            '2' => $reviews->where('rating', 2)->count(),
+            '1' => $reviews->where('rating', 1)->count(),
+        ];
+        $ratingPercentages = array_map(function ($count) use ($totalReviews) {
+            return $totalReviews > 0 ? round(($count / $totalReviews) * 100, 2) : 0;
+        }, $ratingCounts);
+
+        return view('frontend.restaurant_details', compact('client', 'menus', 'galleries', 'reviews', 'totalReviews', 'averageRating', 'ratingCounts', 'ratingPercentages'));
     }
 
     public function AddFavourite(Request $request, $id){

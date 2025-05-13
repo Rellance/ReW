@@ -24,9 +24,20 @@ class OrderController extends Controller
         ]);
         $cart = session()->get('cart',[]);
         $totalAmount = 0;
-        foreach ($cart as $item) {
-            $totalAmount += $item['price'] * $item['quantity'];
-        }
+
+foreach ($cart as $item) {
+    if (
+        isset($item['price'], $item['quantity']) &&
+        is_numeric($item['price']) &&
+        is_numeric($item['quantity'])
+    ) {
+        $price = floatval($item['price']);
+        $quantity = intval($item['quantity']);
+        $totalAmount += $price * $quantity;
+    }
+}
+
+
         if (session()->has('coupon')) {
             $tt=(Session::get('coupon')['discount_amount']);
         } else {

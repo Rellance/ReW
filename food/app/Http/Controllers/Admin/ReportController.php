@@ -71,4 +71,44 @@ class ReportController extends Controller
 
         return view('client.backend.report.search_by_date', compact('orderGroupData', 'formattedDate'));
     }
+
+    public function ClientSearchByMonth(Request $request){
+        $month = $request->month;
+        $year = $request->year_number;
+
+        $cid = Auth::guard('client')->id();
+
+        $orders = Order::where('order_month', $month)->where('order_year', $year)->whereHas('orderItems', function ($query) use ($cid) {
+            $query->where('client_id', $cid);
+        })->orderBy('id', 'DESC')->get();
+
+        $orderGroupData = OrderItem::with('order', 'product')
+            ->whereIn('order_id', $orders->pluck('id'))
+            ->where('client_id', $cid)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->groupBy('order_id');
+
+        return view('client.backend.report.search_by_month', compact('orderGroupData', 'month', 'year'));
+    }
+
+    public function ClientSearchByYear(Request $request)
+    {
+        $year = $request->year;
+
+        $cid = Auth::guard('client')->id();
+
+        $orders = Order::where('order_year', $year)->whereHas('orderItems', function ($query) use ($cid) {
+            $query->where('client_id', $cid);
+        })->orderBy('id', 'DESC')->get();
+
+        $orderGroupData = OrderItem::with('order', 'product')
+            ->whereIn('order_id', $orders->pluck('id'))
+            ->where('client_id', $cid)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->groupBy('order_id');
+
+        return view('client.backend.report.search_by_year', compact('orderGroupData', 'year'));
+    }
 }
