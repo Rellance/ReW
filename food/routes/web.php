@@ -141,6 +141,13 @@ Route::middleware('admin')->group(function () {
         Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
         Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
     });
+
+    Route::controller(ReviewController::class)->group(function(){
+        Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');  
+        Route::get('/admin/store/review', 'AdminApproveReview')->name('admin.approved.review');  
+        Route::get('/reviewChangeStatus', 'ReviewChangeStatus');
+
+    });
 }); // End Admin Middleware
 
 Route::middleware(['status', 'client'])->group(function () {
@@ -190,6 +197,10 @@ Route::middleware(['status', 'client'])->group(function () {
         Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
         Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
         Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
+    });
+
+    Route::controller(ReviewController::class)->group(function(){
+        Route::get('/client/allreviews', 'ClientAllReviews')->name('client.all.reviews');  
 
     });
 });

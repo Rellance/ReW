@@ -119,7 +119,6 @@ class CartController extends Controller
             $totalAmount = 0;
     
             foreach ($cart as $car) {
-                // Безопасная проверка и преобразование цены
                 $price = isset($car['price']) && is_numeric(str_replace(',', '.', $car['price']))
                     ? (float) str_replace(',', '.', $car['price'])
                     : 0;

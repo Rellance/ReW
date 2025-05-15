@@ -26,7 +26,9 @@
                             ->where('client_id', $item->id)
                             ->where('status', '1')
                             ->first();
-
+                    
+                    $reviewsCount = App\Models\Review::where('client_id', $item->id)->where('status', '1')->latest()->get();
+                    $averageRating = App\Models\Review::where('client_id', $item->id)->where('status', '1')->avg('rating');
                     @endphp
 
                     <div class="col-md-3">
@@ -34,7 +36,7 @@
                             <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                                 <div class="list-card-image">
                                     <div class="star position-absolute"><span class="badge badge-success"><i
-                                                class="icofont-star"></i> 3.1 (300+)</span></div>
+                                                class="icofont-star"></i> {{ number_format($averageRating, 1) }} ({{ count($reviewsCount) }}+)</span></div>
                                     <div class="favourite-heart text-danger position-absolute"><a aria-label="Add to Wishlist" onclick="addFavourite({{$item->id}})">
                                         <i class="icofont-heart"></i>
                                     </a></div>
