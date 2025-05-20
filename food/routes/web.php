@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Frontend\FilterController;
 use App\Http\Controllers\Frontend\ReviewController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
@@ -229,5 +230,14 @@ Route::controller(OrderController::class)->group(function () {
 
 Route::controller(ReviewController::class)->group(function(){
     Route::post('/store/review', 'StoreReview')->name('store.review');  
+
+
+    
+});
+
+Route::controller(FilterController::class)->group(function(){
+    Route::get('/list/restaurant', 'ListRestaurant')->name('list.restaurant');
+    Route::get('/filter/products', 'FilterProducts')->name('filter.products');
+
     
 });

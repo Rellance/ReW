@@ -75,8 +75,6 @@
       }
       @endif 
      </script>
-     ============
-
     {{-- ------------ Wishlist Add Start ----------- --}}
     <script type="text/javascript">
       $.ajaxSetup({
