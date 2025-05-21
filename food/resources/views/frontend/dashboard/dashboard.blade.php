@@ -20,11 +20,10 @@
     <link href="{{ asset('frontend/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('frontend/css/osahan.css') }}" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.theme.css') }}">
-
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    <script src="https://js.stripe.com/v3/"></script> 
 
 </head>
 

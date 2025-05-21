@@ -155,6 +155,9 @@
                     </ul>
                 </li>
 
+
+                <li class="menu-title mt-2" data-key="t-components">Elements</li>
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
@@ -164,8 +167,6 @@
                         <li><a href="{{ route('admin.all.reports') }}">All Reports</a></li>
                     </ul>
                 </li>
-
-                <li class="menu-title mt-2" data-key="t-components">Elements</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
@@ -174,6 +175,18 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('admin.pending.review') }}" data-key="t-lightbox">Pending Reviews</a></li>
                         <li><a href="{{ route('admin.approved.review') }}" data-key="t-range-slider">Approved Reviews</a></li>
+                        
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="users"></i>
+                        <span data-key="t-ui-elements">Role & Permission </span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.permission') }}" data-key="t-lightbox">All Permission</a></li>
+                        <li><a href="{{ route('add.permission') }}" data-key="t-range-slider">Add Permission</a></li>
                         
                     </ul>
                 </li>

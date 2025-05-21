@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Frontend\FilterController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Admin\RoleController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
@@ -143,11 +144,19 @@ Route::middleware('admin')->group(function () {
         Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
     });
 
-    Route::controller(ReviewController::class)->group(function(){
-        Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');  
-        Route::get('/admin/store/review', 'AdminApproveReview')->name('admin.approved.review');  
+    Route::controller(ReviewController::class)->group(function () {
+        Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
+        Route::get('/admin/store/review', 'AdminApproveReview')->name('admin.approved.review');
         Route::get('/reviewChangeStatus', 'ReviewChangeStatus');
+    });
 
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('/all/permission', 'RolePermission')->name('all.permission');
+        Route::get('/add/permission', 'AddPermission')->name('add.permission');
+        Route::post('/store/permission', 'StorePermission')->name('permission.store');
+        Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+        Route::post('/update/permission', 'UpdatePermission')->name('permission.update');
+        Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
     });
 }); // End Admin Middleware
 
@@ -200,9 +209,8 @@ Route::middleware(['status', 'client'])->group(function () {
         Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
     });
 
-    Route::controller(ReviewController::class)->group(function(){
-        Route::get('/client/allreviews', 'ClientAllReviews')->name('client.all.reviews');  
-
+    Route::controller(ReviewController::class)->group(function () {
+        Route::get('/client/allreviews', 'ClientAllReviews')->name('client.all.reviews');
     });
 });
 // End Client Middleware
@@ -224,20 +232,20 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/checkout', 'Checkout')->name('checkout');
 });
 
-Route::controller(OrderController::class)->group(function () {
-    Route::post('/cash_order', 'CashOrder')->name('cash.order');
+Route::controller(OrderController::class)->group(function(){
+    Route::post('/cash_order', 'CashOrder')->name('cash_order');
+    Route::post('/stripe_order', 'StripeOrder')->name('stripe_order');
+
+});
+Route::controller(ReviewController::class)->group(function () {
+    Route::post('/store/review', 'StoreReview')->name('store.review');
 });
 
-Route::controller(ReviewController::class)->group(function(){
-    Route::post('/store/review', 'StoreReview')->name('store.review');  
-
-
-    
-});
-
-Route::controller(FilterController::class)->group(function(){
+Route::controller(FilterController::class)->group(function () {
     Route::get('/list/restaurant', 'ListRestaurant')->name('list.restaurant');
     Route::get('/filter/products', 'FilterProducts')->name('filter.products');
-
-    
 });
+
+Route::get('/thanks', function () {
+    return view('frontend.checkout.thanks');
+})->name('frontend.checkout.thanks');
