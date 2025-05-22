@@ -7,18 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">All Permissions</h4>
+                        <h4 class="mb-sm-0 font-size-18">All Roles</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <a href="{{ route('add.permission') }}" class="btn btn-primary waves-effect waves-light">Add
-                                    Permission</a>&nbsp;&nbsp;
-                            
-                                <a href="{{ route('import.permission') }}"
-                                    class="btn btn-warning waves-effect waves-light">Import</a>&nbsp;&nbsp;
-                            
-                                <a href="{{ route('add.permission') }}"
-                                    class="btn btn-danger waves-effect waves-light">Export</a>
+                                <a href="{{ route('add.roles') }}" class="btn btn-primary waves-effect waves-light">Add
+                                    Role</a>
                             </ol>
                         </div>
 
@@ -37,8 +31,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Permission Name</th>
-                                        <th>Permission Group</th>
+                                        <th>Roles Name</th>
                                         <th>Guard Name</th>
                                         <th>Action</th>
                                     </tr>
@@ -46,16 +39,15 @@
 
 
                                 <tbody>
-                                    @foreach ($permissions as $key => $item)
+                                    @foreach ($roles as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td>{{ $item->group_name }}</td>
                                             <td>{{ $item->guard_name }}</td>
 
-                                            <td><a href="{{ route('edit.permission', $item->id) }}"
+                                            <td><a href="{{ route('edit.roles', $item->id) }}"
                                                     class="btn btn-info waves-effect waves-light">Edit</a>
-                                                <a href="{{ route('delete.permission', $item->id) }}"
+                                                <a href="{{ route('delete.roles', $item->id) }}"
                                                     class="btn btn-danger waves-effect waves-light"
                                                     id="delete">Delete</a>
                                             </td>

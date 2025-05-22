@@ -37,7 +37,7 @@
                         @endphp
 
                         <div class="filters-body">
-                            <div id="accordion">
+                            <div id="accordion-category">
                                 <div class="filters-card border-bottom p-4">
                                     <div class="filters-card-header" id="headingOne">
                                         <h6 class="mb-0">
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                        data-parent="#accordion">
+                                        data-parent="#accordion-category">
                                         <div class="filters-card-body card-shop-filters">
                                             @foreach ($categories as $category)
                                                 @php
@@ -80,7 +80,7 @@
                         @endphp
 
                         <div class="filters-body">
-                            <div id="accordion">
+                            <div id="accordion-city">
                                 <div class="filters-card border-bottom p-4">
                                     <div class="filters-card-header" id="headingOneCity">
                                         <h6 class="mb-0">
@@ -93,7 +93,7 @@
                                     </div>
 
                                     <div id="collapseOneCity" class="collapse show" aria-labelledby="headingOneCity"
-                                        data-parent="#accordion">
+                                        data-parent="#accordion-city">
                                         <div class="filters-card-body card-shop-filters">
                                             @foreach ($cities as $city)
                                                 @php
@@ -123,7 +123,7 @@
                         @endphp
 
                         <div class="filters-body">
-                            <div id="accordion">
+                            <div id="accordion-menu">
                                 <div class="filters-card border-bottom p-4">
                                     <div class="filters-card-header" id="headingOneMenu">
                                         <h6 class="mb-0">
@@ -136,7 +136,7 @@
                                     </div>
 
                                     <div id="collapseOneMenu" class="collapse show" aria-labelledby="headingOneMenu"
-                                        data-parent="#accordion">
+                                        data-parent="#accordion-menu">
                                         <div class="filters-card-body card-shop-filters">
                                             @foreach ($menus as $menu)
                                                 @php
@@ -215,28 +215,34 @@
                     cities: [],
                     menus: []
                 };
-                console.log(filters);
-                console.log(filters);
+
+                // Собираем выбранные фильтры
                 $('.filter-checkbox:checked').each(function() {
                     var type = $(this).data('type');
                     var id = $(this).data('id');
-
-                    if (!filters[type + 's']) {
-                        filters[type + 's'] = [];
-                    }
                     filters[type + 's'].push(id);
                 });
 
+                // Логируем фильтры для проверки
+                console.log('Отправляемые фильтры:', filters);
+
+                // AJAX-запрос для фильтрации продуктов
                 $.ajax({
                     url: '{{ route('filter.products') }}',
                     method: 'GET',
                     data: filters,
                     success: function(response) {
-                        $('#products-list').html(response)
+                        if (response.trim() === '') {
+                            $('#products-list').html('<p class="text-center">No products found.</p>');
+                        } else {
+                            $('#products-list').html(response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка при загрузке продуктов:', error);
                     }
                 });
-
             });
-        })
+        });
     </script>
 @endsection

@@ -112,7 +112,7 @@ class OrderController extends Controller
             $tt = $totalAmount;
         }
 
-        \Stripe\Stripe::setApiKey('');
+        \Stripe\Stripe::setApiKey(''); 
         
         $token = $_POST['stripeToken'];
 
