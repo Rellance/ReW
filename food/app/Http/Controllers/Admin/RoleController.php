@@ -185,7 +185,57 @@ class RoleController extends Controller
             'message' => 'Role Permission Added Successfully',
             'alert-type' => 'success'
         ); 
-        return redirect()->route('all.roles')->with($notification);
+        return redirect()->route('all.roles.permission')->with($notification);
 
+    }
+
+    public function AllRolePermission(){
+        $roles = Role::all();
+        return view('admin.backend.pages.rolesetup.all_roles_permission',compact('roles'));
+     }
+
+     public function AdminEditRoles($id){
+        $role = Role::find($id);
+        $permissions = Permission::all();
+        $permission_groups = Admin::getPermissionGroups();
+        return view('admin.backend.pages.rolesetup.edit_roles_permission', compact('role', 'permissions', 'permission_groups'));
+     }
+
+     public function AdminUpdateRoles(Request $request, $id)
+     {
+        $role = Role::find($id);
+        $permissions = $request->permission;
+
+        if (!empty($permissions)) {
+            $permissionNames = Permission::whereIn('id', $permissions)->pluck('name')->toArray();
+            $role->syncPermissions($permissionNames);
+        }else {
+            $role->syncPermissions([]);
+         }
+
+        $notification = array(
+            'message' => 'Role Permission Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.roles.permission')->with($notification);
+     }
+
+    public function AdminDeleteRoles($id){
+        $role = Role::find($id);
+        $role->permissions()->detach();
+
+        $notification = array(
+            'message' => 'Role Permission Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+     }
+
+     public function AllAdmin()
+     {
+        $admins = Admin::latest()->get();
+        return view('admin.backend.pages.admin.all_admin', compact('admins')); 
     }
 }

@@ -174,8 +174,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('admin.pending.review') }}" data-key="t-lightbox">Pending Reviews</a></li>
-                        <li><a href="{{ route('admin.approved.review') }}" data-key="t-range-slider">Approved Reviews</a></li>
-                        
+                        <li><a href="{{ route('admin.approved.review') }}" data-key="t-range-slider">Approved Reviews</a></li>   
                     </ul>
                 </li>
 
@@ -188,6 +187,17 @@
                         <li><a href="{{ route('all.permission') }}" data-key="t-lightbox">All Permission</a></li>
                         <li><a href="{{ route('all.roles') }}" data-key="t-lightbox">All Roles</a></li>
                         <li><a href="{{ route('add.roles.permission') }}" data-key="t-lightbox">Role In Permission</a></li>
+                        <li><a href="{{ route('all.roles.permission') }}" data-key="t-lightbox">All Role In Permmision</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="users"></i>
+                        <span data-key="t-ui-elements">Manage Admins</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.admin') }}" data-key="t-lightbox">All Admins</a></li>
+                        <li><a href="{{ route('admin.approved.review') }}" data-key="t-range-slider">Add Admin</a></li>   
                     </ul>
                 </li>
             </ul>

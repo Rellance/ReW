@@ -3,13 +3,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     @php
-        $products = App\Models\Product::where('client_id', $client->id)->limit(3)->get();
-        $menuNames = $products
-            ->map(function ($product) {
-                return $product->menu->menu_name;
-            })
-            ->toArray();
-        $menuNamesString = implode(' . ', $menuNames);
+        // Получаем продукты для данного ресторана
+        $products = App\Models\Product::where('client_id', $client->id)
+            ->with('menu') // Используем with для eager loading
+            ->limit(3)
+            ->get();
+
+        // Проверяем наличие связанного меню и собираем названия
+        $menuNames = $products->map(function ($product) {
+            return $product->menu ? $product->menu->menu_name : null;
+        })
+        ->filter() // Удаляем null значения
+        ->unique() // Удаляем дубликаты
+        ->toArray();
+
+        // Объединяем названия через точку
+        $menuNamesString = implode(' . ', array_filter($menuNames));
 
         $coupons = App\Models\Coupon::where('client_id', $client->id)->where('status', '1')->first();
     @endphp
@@ -28,7 +37,12 @@
                             <p class="text-white mb-1"><i class="icofont-location-pin"></i>{{ $client->addres }} <span
                                     class="badge badge-success">OPEN</span>
                             </p>
-                            <p class="text-white mb-0"><i class="icofont-food-cart"></i> {{ $menuNamesString }}
+                            <p class="text-white mb-0"><i class="icofont-food-cart"></i> 
+                                @if($menuNamesString)
+                                    {{ $menuNamesString }}
+                                @else
+                                    No menu items available
+                                @endif
                             </p>
                         </div>
                     </div>

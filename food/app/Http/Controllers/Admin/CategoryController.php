@@ -9,6 +9,7 @@ use App\Models\Category;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\City;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -91,17 +92,24 @@ class CategoryController extends Controller
     }
     public function DeleteCategory($id)
     {
-        $item = Category::find($id);
-        $img = $item->image;
-        unlink($img);
-        Category::find($id)->delete();
-
-        $notification = array(
-            'message' => 'Category Deleted Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
+        try {
+            // Find the category first
+            $category = Category::findOrFail($id);
+    
+            // Delete the record from database
+            $category->delete();
+    
+            return redirect()->back()->with([
+                'message' => 'Category Deleted Successfully',
+                'alert-type' => 'success'
+            ]);
+    
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'message' => 'Error deleting category: ' . $e->getMessage(),
+                'alert-type' => 'error'
+            ]);
+        }
     }
 
     public function AllCity()

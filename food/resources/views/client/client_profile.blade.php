@@ -81,10 +81,9 @@
                                         </select>
                                     </div>
                                     
-
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">Restaurant Info</label>
-                                        <textarea name="shop_info" id="basicpill-address-input" class="form-control" rows="2" placeholder="Enter your Address">{{ $profileData->shop_info  }}</textarea>
+                                        <textarea name="shop_info" id="basicpill-address-input" class="form-control" rows="2" placeholder="Enter Info">{{ $profileData->shop_info  }}</textarea>
                                     </div>
 
                                     <div class="mb-3">
