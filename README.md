@@ -1,102 +1,84 @@
-# 🍽️ Laravel 11 Multi-Restaurant Food Order Application
+# 🍽️ Laravel 11 Moniravintola-Ruokatilausjärjestelmä
 
-**Современная система управления заказами для множественных ресторанов**
+**Moderni moniravintolainen tilausjärjestelmä Laravel 11:llä**
 
-Полнофункциональная веб-платформа для управления заказами еды, построенная на Laravel 11 с поддержкой множественных ресторанов, ролевой системой доступа и интегрированными платежными шлюзами.
+Täysin toimiva verkkopohjainen ruokatilausjärjestelmä, joka tukee useita ravintoloita, roolipohjaista käyttöoikeudenhallintaa ja integroituja maksupalveluja.
 
 ![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-## 📑 Содержание
-- [Особенности](#особенности)
-- [Технологии](#технологии)
-- [Установка](#установка)
-- [Использование](#использование)
-- [API Документация](#api-документация)
-- [Скриншоты](#скриншоты)
-- [Тестирование](#тестирование)
-- [Вклад в проект](#вклад-в-проект)
-- [Лицензия](#лицензия)
+## 📑 Sisällysluettelo
+- [Ominaisuudet](#ominaisuudet)
+- [Teknologiat](#teknologiat)
+- [Asennus](#asennus)
+- [Käyttö](#käyttö)
+- [API-dokumentaatio](#api-dokumentaatio)
+- [Kuvakaappaukset](#kuvakaappaukset)
+- [Testaus](#testaus)
+- [Osallistuminen](#osallistuminen)
+- [Lisenssi](#lisenssi)
 
-## ✨ Особенности
+## ✨ Ominaisuudet
 
-### 🏪 Управление Ресторанами
-- **Многоресторанная архитектура** с изолированными данными
-- **Панель администратора ресторана** для управления меню и заказами
-- **Система категорий** и подкатегорий блюд
-- **Загрузка множественных изображений** для блюд
+### 🏪 Ravintolanhallinta
+- **Moniravintola-arkkitehtuuri** eristetyillä tietokannoilla
+- **Ylläpitopaneeli** ruokalistojen ja tilauksien hallintaan
+- **Dynaaminen hinnastojen hallinta** Excel-tuella
+- **Reaaliaikainen tilausseuranta** karttaintegraatiolla
 
-### 👥 Ролевая Система
-- **Клиенты**: просмотр меню, оформление заказов, отзывы
-- **Владельцы ресторанов**: управление меню, заказами, статистикой  
-- **Супер-администратор**: глобальное управление системой
+### 👥 Roolipohjainen järjestelmä
+- **Asiakkaat**: Selaa ravintoloita, tee tilauksia, jätä arviointeja
+- **Ravintoloitsijat**: Hallitse menua ja analysoi myyntiä
+- **Pääylläpitäjä**: Järjestelmän laajamittainen konfigurointi
 
-### 💳 Платежная Система
-- **Множественные платежные шлюзы** (Stripe, PayPal, Razorpay)
-- **Система купонов и скидок**
-- **Автоматическая генерация PDF-счетов**
+### 💳 Maksujärjestelmät
+- Integroidut **Stripe** -maksupalvelut
+- **Kuponkien ja alennusten hallinta**
+- Automaattiset **PDF-laskut** sähköpostitse
 
-### 🔧 Дополнительные Возможности
-- **Система отзывов и рейтингов** ресторанов
-- **Email-уведомления** с динамической конфигурацией
-- **Экспорт/импорт данных** из CSV/Excel
-- **Мобильно-адаптивный дизайн**
-
-## 🛠️ Технологии
+## 🛠️ Teknologiat
 
 ### Backend
-- **Laravel 11** - PHP framework
-- **MySQL 8.0+** - база данных
-- **Laravel Breeze** - мультиавторизация
-- **Spatie Laravel Permission** - управление ролями
+- Laravel 11 PHP-kehys
+- MySQL 8.0+ relaatiotietokanta
+- Laravel Breeze moniautentikointiin
+- Spatie Permission -käyttöoikeudet
 
-### Frontend  
-- **Blade Templates** - шаблонизатор
-- **Bootstrap 5** - CSS framework
-- **JavaScript (ES6+)** - интерактивность
-- **jQuery** - DOM манипуляции
+### Frontend
+- Blade-mallit
+- Bootstrap 5 CSS-kehys
+- JavaScript ES6+
+- jQuery DOM-manipulaatioon
 
-### Дополнительные Инструменты
-- **Composer** - управление зависимостями PHP
-- **NPM** - управление frontend зависимостями
-- **Laravel Sanctum** - API аутентификация
+## 🚀 Asennus
 
-
-## 🚀 Установка
-
-### Системные Требования
+### Järjestelmävaatimukset
 - PHP 8.3+
-- MySQL 8.0+ или MariaDB 10.4+
+- MySQL 8.0+ tai MariaDB 10.4+
 - Composer 2.6+
-- Node.js 18+ и NPM
+- Node.js 18+
 
-### Пошаговая Установка
+### Asennusvaiheet
 
-1. **Клонирование репозитория**
-git clone https://github.com/username/ReW.git
-cd ReW
-
-2. **Установка PHP зависимостей**
-composer install --no-dev --optimize-autoloader
-
-3. **Установка Node.js зависимостей**
-npm install && npm run build
+1. Kloonaa repositorio
+`git clone https://github.com/Rellance/ReW
+cd ReW`
+2. Asenna PHP-riippuvuudet
+`composer install --no-dev --optimize-autoloader`
 
 
-4. **Конфигурация окружения**
-cp .env.example .env
-php artisan key:generate
+3. Asenna Node.js -riippuvuudet
+`npm install && npm run build`
 
 
-5. **Настройка базы данных**
-php artisan migrate --seed
+4. Määritä ympäristömuuttujat
+`cp .env.example .env
+php artisan key:generate`
 
+5. Suorita tietokantamigraatiot
+`php artisan migrate --seed`
 
-6. **Настройка прав доступа**
-chmod -R 775 storage bootstrap/cache
-
-
-7. **Запуск сервера**
-php artisan serve
+6. Käynnistä palvelin
+`php artisan serve`
 
