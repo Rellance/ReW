@@ -19,7 +19,7 @@ Täysin toimiva verkkopohjainen ruokatilausjärjestelmä, joka tukee useita ravi
 - [Osallistuminen](#osallistuminen)
 - [Lisenssi](#lisenssi)
 
-##✨Ominaisuudet
+## ✨Ominaisuudet
 
 ### 🏪 Ravintolanhallinta
 - **Moniravintola-arkkitehtuuri** eristetyillä tietokannoilla
