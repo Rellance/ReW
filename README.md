@@ -12,32 +12,26 @@ Täysin toimiva verkkopohjainen ruokatilausjärjestelmä, joka tukee useita ravi
 - [Ominaisuudet](#ominaisuudet)
 - [Teknologiat](#teknologiat)
 - [Asennus](#asennus)
-- [Käyttö](#käyttö)
-- [API-dokumentaatio](#api-dokumentaatio)
-- [Kuvakaappaukset](#kuvakaappaukset)
-- [Testaus](#testaus)
-- [Osallistuminen](#osallistuminen)
-- [Lisenssi](#lisenssi)
 
 ## ✨Ominaisuudet
 
-### 🏪 Ravintolanhallinta
+### 🏪Ravintolanhallinta
 - **Moniravintola-arkkitehtuuri** eristetyillä tietokannoilla
 - **Ylläpitopaneeli** ruokalistojen ja tilauksien hallintaan
 - **Dynaaminen hinnastojen hallinta** Excel-tuella
 - **Reaaliaikainen tilausseuranta** karttaintegraatiolla
 
-### 👥 Roolipohjainen järjestelmä
+### 👥Roolipohjainen järjestelmä
 - **Asiakkaat**: Selaa ravintoloita, tee tilauksia, jätä arviointeja
 - **Ravintoloitsijat**: Hallitse menua ja analysoi myyntiä
 - **Pääylläpitäjä**: Järjestelmän laajamittainen konfigurointi
 
-### 💳 Maksujärjestelmät
+### 💳Maksujärjestelmät
 - Integroidut **Stripe** -maksupalvelut
 - **Kuponkien ja alennusten hallinta**
 - Automaattiset **PDF-laskut** sähköpostitse
 
-## 🛠️ Teknologiat
+## 🛠️Teknologiat
 
 ### Backend
 - Laravel 11 PHP-kehys
@@ -51,7 +45,7 @@ Täysin toimiva verkkopohjainen ruokatilausjärjestelmä, joka tukee useita ravi
 - JavaScript ES6+
 - jQuery DOM-manipulaatioon
 
-## 🚀 Asennus
+## 🚀Asennus
 
 ### Järjestelmävaatimukset
 - PHP 8.3+
