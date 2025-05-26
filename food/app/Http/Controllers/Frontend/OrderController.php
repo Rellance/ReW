@@ -11,18 +11,22 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
+use App\Models\Admin;
+use App\Notifications\OrderComplete;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 { 
     public function CashOrder(Request $request){
 
+        $user = Admin::where('role', 'admin')->get();
 
-        //$validateData = $request->validate([
-        //    'name' => 'required',
-        //    'email' => 'required',
-        //    'phone' => 'required',
-        //    'address' => 'required',
-        //]);
+        $validateData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
 
         $cart = session()->get('cart',[]);
         $totalAmount = 0;
@@ -78,6 +82,8 @@ class OrderController extends Controller
         if (Session::has('cart')) {
             Session::forget('cart');
          }
+
+         Notification::send($user, new OrderComplete($request->name));
 
          $notification = array(
             'message' => 'Order Placed Successfully',
@@ -168,7 +174,7 @@ class OrderController extends Controller
         if (Session::has('cart')) {
             Session::forget('cart');
          }
-
+         
          $notification = array(
             'message' => 'Order Placed Successfully',
             'alert-type' => 'success'
@@ -179,6 +185,16 @@ class OrderController extends Controller
     }
     //End Method 
 
-
+    public function MarkAsRead(Request $request, $notificationId)
+    {
+        $user = Auth::guard('admin')->user();
+        $notification = $user->notifications()->where('id', $notificationId)->first();
+        if ($notification) {
+            $notification->markAsRead();
+        }        
+        return response()->json([
+            'count' => $user->unreadNotifications->count(),
+        ]);
+    }
 
 }

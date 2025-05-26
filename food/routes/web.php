@@ -84,7 +84,7 @@ Route::get('/client/logout', [ClientController::class, 'ClientLogout'])->name('c
 Route::middleware('admin')->group(function () {
 
     Route::controller(CategoryController::class)->group(function () {
-        Route::get('/all/category', 'AllCategory')->name('all.category');
+        Route::get('/all/category', 'AllCategory')->name('all.category')->middleware('permission:category.all');
         Route::get('/add/category', 'AddCategory')->name('add.category');
         Route::post('/store/category', 'StoreCategory')->name('category.store');
         Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
@@ -181,7 +181,11 @@ Route::middleware('admin')->group(function () {
     });
     Route::controller(RoleController::class)->group(function () {
         Route::get('/all/admin', 'AllAdmin')->name('all.admin');
-
+        Route::get('/add/admin', 'AddAdmin')->name('add.admin');
+        Route::post('/store/admin', 'StoreAdmin')->name('admin.store');
+        Route::get('/edit/admin/{id}', 'EditAdmin')->name('edit.admin');
+        Route::post('/update/admin/{id}', 'UpdateAdmin')->name('admin.update');
+        Route::get('/delete/admin/{id}', 'DeleteAdmin')->name('delete.admin');
     });
 }); // End Admin Middleware
 
@@ -260,6 +264,9 @@ Route::controller(CartController::class)->group(function () {
 Route::controller(OrderController::class)->group(function(){
     Route::post('/cash_order', 'CashOrder')->name('cash_order');
     Route::post('/stripe_order', 'StripeOrder')->name('stripe_order');
+    Route::post('/mark-notification-as-read/{notification}', 'MarkAsRead');
+
+    
 
 });
 Route::controller(ReviewController::class)->group(function () {

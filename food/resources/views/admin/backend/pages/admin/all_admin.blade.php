@@ -11,7 +11,7 @@
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <a href="{{ route('add.category') }}" class="btn btn-primary waves-effect waves-light">Add
+                                <a href="{{ route('add.admin') }}" class="btn btn-primary waves-effect waves-light">Add
                                     Admin</a>
                             </ol>
                         </div>
@@ -49,16 +49,14 @@
                                             <td>{{ $admin->email }}</td>
                                             <td>{{ $admin->phone }}</td>
                                             <td>
-                                                @if ($admin->role == 'admin')
-                                                    <span class="badge bg-success">{{ $admin->role }}</span>
-                                                @else
-                                                    <span class="badge bg-warning">{{ $admin->role }}</span>
-                                                @endif
-
+                                              @foreach ($admin->roles as $role)
+                                                <span class="badge bg-success">{{ $role->name }}</span> 
+                                                  
+                                              @endforeach
                                             </td>
-                                            <td><a href="{{ route('edit.category', $admin->id) }}"
+                                            <td><a href="{{ route('edit.admin', $admin->id) }}"
                                                     class="btn btn-info waves-effect waves-light">Edit</a>
-                                                <a href="{{ route('delete.category', $admin->id) }}"
+                                                <a href="{{ route('delete.admin', $admin->id) }}"
                                                     class="btn btn-danger waves-effect waves-light"
                                                     id="delete">Delete</a>
                                             </td>

@@ -46,8 +46,15 @@
 <td>{{$key+1}}</td>
 <td>{{$item->category_name}}</td>
 <td> <img src="{{ asset($item->image)}}" style="width: 70px; height:40px;"></td>
+
+@if (Auth::guard('admin')->user()->can('category.edit'))
+
 <td><a href="{{route('edit.category',$item->id)}}" class="btn btn-info waves-effect waves-light">Edit</a>
+@endif
+@if (Auth::guard('admin')->user()->can('category.delete'))
+
 <a href="{{route('delete.category',$item->id)}}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a></td>
+@endif
 
 </tr>
 @endforeach
