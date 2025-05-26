@@ -10,7 +10,7 @@ Täysin toimiva verkkopohjainen ruokatilausjärjestelmä, joka tukee useita ravi
 
 ## 📑 Sisällysluettelo
 - [Ominaisuudet](#ominaisuudet)
-- [Teknologiat](#teknologiat)
+- [Teknologiat](#%EF%B8%8Fteknologiat)
 - [Asennus](#asennus)
 
 ## ✨Ominaisuudet
